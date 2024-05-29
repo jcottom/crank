@@ -378,7 +378,8 @@ impl Build {
         let status = cmd
             .stdout(std::process::Stdio::piped())
             .stderr(std::process::Stdio::piped())
-            .status()?;
+            .status()
+            .with_context(|| format!("Command failed: {cmd:?}"))?;
         if !status.success() {
             bail!("pdc failed with error {:?}", status);
         }
